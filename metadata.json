@@ -1,0 +1,7 @@
+{
+  "name": "24x7 RO Service",
+  "description": "Book RO service, installation, repair and AMC in Bengaluru at your doorstep.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
