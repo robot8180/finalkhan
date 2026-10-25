@@ -21,7 +21,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 211 100% 50%;
+    --primary: 205 53% 43%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
@@ -30,7 +30,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 41 100% 50%;
+    --accent: 39 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -325,5 +325,33 @@
   }
   .ticker-number.animate {
     animation: popNum 420ms cubic-bezier(.2,.9,.2,1);
+  }
+
+  .banOffer span {
+    position: relative;
+    color: #888;
+    margin-right: 8px;
+    display: inline-block;
+  }
+  .banOffer span::after {
+    position: absolute;
+    content: "";
+    width: 105%;
+    top: 50%;
+    height: 4px;
+    background: #f40000;
+    left: -2.5%;
+    transform: rotate(-10deg);
+  }
+
+  @keyframes phone-ring {
+    0%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(-18deg) scale(1.1); }
+    20%, 40% { transform: rotate(18deg) scale(1.1); }
+    50% { transform: rotate(0deg); }
+  }
+  .animate-phone-ring {
+    animation: phone-ring 2.2s infinite ease-in-out;
+    transform-origin: center;
   }
 }

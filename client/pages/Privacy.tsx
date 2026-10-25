@@ -9,19 +9,19 @@ export default function Privacy() {
           <section>
             <h2 className="text-lg font-bold text-foreground mb-2">1. Overview</h2>
             <p>
-              At QuickROFix (operated under RO Services Bengaluru, accessible from bookroservice.com), your privacy is of paramount importance to us. This Privacy Policy document outlines the types of information that is collected and recorded by QuickROFix and how we use it.
+              At 24x7 RO Service (accessible from https://24x7roservice.co.in/), your privacy is of paramount importance to us. This Privacy Policy document outlines the types of information that is collected and recorded by 24x7 RO Service and how we use it.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-bold text-foreground mb-2">2. Information We Collect</h2>
             <p>
-              When you book a service, call our helpline, or fill out our online request forms, we may collect personally identifiable information including:
+              When you call our helpline (08088275348) to request a technician, we may collect the following details over the phone:
             </p>
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Name and contact phone number.</li>
-              <li>Residential or commercial service address in Bengaluru and nearby areas.</li>
-              <li>Water purifier make, model, and reported issues.</li>
+              <li>Doorstep service address and landmark.</li>
+              <li>Water purifier make, model, and reported issues (e.g. leakage, low flow, motor sound, filter change).</li>
               <li>Feedback and service rating data.</li>
             </ul>
           </section>
@@ -50,9 +50,10 @@ export default function Privacy() {
               If you have any questions or require more information about our Privacy Policy, do not hesitate to contact us at:
             </p>
             <p className="mt-2 font-medium">
-              Email: info@bookroservice.com<br />
-              Helpline: +918088275348<br />
-              Location: Bengaluru, Karnataka, India
+              Direct Helpline: <a href="tel:08088275348" className="text-[#3378a8] hover:underline">08088275348</a><br />
+              Email: service@24x7roservice.co.in<br />
+              Website: https://24x7roservice.co.in/<br />
+              24x7 RO Service
             </p>
           </section>
         </div>

@@ -9,14 +9,14 @@ export default function Terms() {
           <section>
             <h2 className="text-lg font-bold text-foreground mb-2">1. Service Agreement</h2>
             <p>
-              By booking a doorstep inspection or repair with QuickROFix, you agree to these Terms and Conditions. Our technicians provide professional water purifier repair, installation, and maintenance across Bengaluru and adjoining localities.
+              By scheduling a doorstep inspection or repair with 24x7 RO Service (https://24x7roservice.co.in/), you agree to these Terms and Conditions. Our technicians provide professional water purifier repair, installation, and maintenance across all areas.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-bold text-foreground mb-2">2. Inspection &amp; Visiting Charges</h2>
             <p>
-              A nominal inspection fee applies if the technician visits and diagnoses the unit but the customer chooses not to proceed with recommended repairs or part replacements. If you proceed with repairs, the visiting fee is adjusted against the total bill.
+              A nominal inspection fee of ₹299* applies if the technician visits and diagnoses the unit but the customer chooses not to proceed with recommended repairs or part replacements. If you proceed with repairs, the visiting fee is adjusted against the total bill.
             </p>
           </section>
 
@@ -25,7 +25,7 @@ export default function Terms() {
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>All replacement spare parts (filters, membranes, booster pumps, SMPS adapters, solenoid valves) provided by our technicians are 100% genuine and brand compatible.</li>
               <li>New parts carry manufacturer or service warranty as specified on the printed/digital invoice.</li>
-              <li>QuickROFix provides a 30-day service guarantee for the specific issue repaired during the service visit.</li>
+              <li>24x7 RO Service provides a 30-day service guarantee for the specific issue repaired during the service visit.</li>
             </ul>
           </section>
 
@@ -46,9 +46,10 @@ export default function Terms() {
           <section>
             <h2 className="text-lg font-bold text-foreground mb-2">6. Contact Information</h2>
             <p className="mt-2 font-medium">
-              Phone: +918088275348<br />
-              Email: info@bookroservice.com<br />
-              QuickROFix – Bengaluru, Karnataka
+              Direct Helpline: <a href="tel:08088275348" className="text-[#3378a8] hover:underline">08088275348</a><br />
+              Email: service@24x7roservice.co.in<br />
+              Website: https://24x7roservice.co.in/<br />
+              24x7 RO Service
             </p>
           </section>
         </div>

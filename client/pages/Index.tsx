@@ -1,584 +1,554 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  Phone,
-  Droplets,
-  ShieldCheck,
-  Clock,
-  Wrench,
-  CheckCircle2,
-  AlertTriangle,
-  Sparkles,
-  ChevronDown,
-  MapPin,
-  Award,
-} from "lucide-react";
-import ReviewsCarousel from "@/components/site/ReviewsCarousel";
-import { toast } from "sonner";
+import { useState } from "react";
+import { Phone, ChevronDown } from "lucide-react";
 
-const reviewsData = [
-  {
-    name: "Arun Krishnan",
-    location: "Koramangala, Bengaluru",
-    avatar: "/avatar1.svg",
-    rating: 5,
-    text: "Called them at 8:30 PM when our RO purifier started leaking heavily. Technician Anand arrived in 40 minutes, replaced the cracked elbow connector and tested the TDS. Super prompt and reasonable!",
-  },
-  {
-    name: "Meera Ramesh",
-    location: "HSR Layout, Bengaluru",
-    avatar: "/avatar2.svg",
-    rating: 5,
-    text: "Excellent service for my Kent Grand Plus. Genuine filters were unpacked and installed right in front of me. Water taste is back to crisp and clean. Best RO service in South Bangalore.",
-  },
-  {
-    name: "Siddharth Verma",
-    location: "Whitefield, Bengaluru",
-    avatar: "/avatar3.svg",
-    rating: 5,
-    text: "Very reliable team. Have been using their annual maintenance plan for 2 years now. Technicians are polite, professional, and always arrive on schedule.",
-  },
-  {
-    name: "Divya Nair",
-    location: "Indiranagar, Bengaluru",
-    avatar: "/avatar2.svg",
-    rating: 5,
-    text: "Our Aquaguard suddenly stopped giving water. The technician diagnosed the booster pump adapter issue quickly, fixed it on the spot, and charged exactly what was quoted on phone.",
-  },
-];
+function TickIcon() {
+  return (
+    <svg
+      className="w-[18px] h-[18px] fill-[#FFA700] shrink-0 mt-0.5"
+      viewBox="0 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M506.231,75.508c-7.689-7.69-20.158-7.69-27.849,0l-319.21,319.211L33.617,269.163c-7.689-7.691-20.158-7.691-27.849,0 c-7.69,7.69-7.69,20.158,0,27.849l139.481,139.481c7.687,7.687,20.16,7.689,27.849,0l333.133-333.136 C513.921,95.666,513.921,83.198,506.231,75.508z" />
+    </svg>
+  );
+}
 
-const problems = [
-  {
-    icon: Droplets,
-    title: "Water Leakage or Dripping",
-    desc: "Cracked pipes, loose fittings, or ruptured filter housing causing water accumulation.",
-  },
-  {
-    icon: AlertTriangle,
-    title: "Strange Taste or Foul Odor",
-    desc: "Exhausted carbon filter or choked membrane allowing foul taste and mineral imbalance.",
-  },
-  {
-    icon: Clock,
-    title: "Slow Water Flow / Drops",
-    desc: "Clogged sediment candle, low booster pump pressure, or defective flow restrictor.",
-  },
-  {
-    icon: Wrench,
-    title: "Vibrations & Loud Noise",
-    desc: "Air trapped in system, worn-out booster pump bearings, or excessive inlet pressure.",
-  },
-  {
-    icon: Sparkles,
-    title: "Purifier Not Turning On",
-    desc: "Faulty SMPS power supply adapter, blown internal fuse, or float valve cutoff failure.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "High TDS Level in Water",
-    desc: "Membrane pores widened or expired; minerals and dissolved solids passing through.",
-  },
-];
-
-const brands = [
-  { name: "Kent", img: "/purifier1.svg" },
-  { name: "Aquaguard", img: "/purifier2.svg" },
-  { name: "Pureit", img: "/purifier3.svg" },
-  { name: "Livpure", img: "/purifier1.svg" },
-  { name: "Havells", img: "/purifier2.svg" },
-  { name: "AO Smith", img: "/purifier3.svg" },
-  { name: "Blue Star", img: "/purifier1.svg" },
-  { name: "LG", img: "/purifier2.svg" },
-];
-
-const localities = [
-  "Indiranagar", "Koramangala", "HSR Layout", "Whitefield", "Electronic City",
-  "BTM Layout", "Marathahalli", "Jayanagar", "JP Nagar", "Bellandur",
-  "Sarjapur Road", "Yelahanka", "Hebbal", "Banashankari", "Rajajinagar",
-  "Malleshwaram", "Kalyan Nagar", "Richmond Town", "Vimanapura", "Kengeri"
-];
-
-const faqs = [
-  {
-    q: "How fast can a technician reach my home in Bengaluru?",
-    a: "We have dedicated mobile technicians stationed across major zones in Bengaluru. On average, a technician reaches your doorstep within 45 to 60 minutes of booking confirmation."
-  },
-  {
-    q: "What are your visiting and inspection charges?",
-    a: "Inspection is just ₹199. If you proceed with the suggested repair or filter replacement, this visiting fee is waived or adjusted against your total service bill."
-  },
-  {
-    q: "Do you use 100% genuine spare parts?",
-    a: "Yes. All filters, booster pumps, adapters, and RO membranes are factory-sealed, 100% genuine, and opened in front of you with a warranty on new components."
-  },
-  {
-    q: "How often should RO water purifier filters be serviced?",
-    a: "Given Bengaluru's high TDS and borewell hardness in areas like Whitefield and Sarjapur, pre-filters should be replaced every 3-4 months, carbon/sediment every 6-9 months, and the RO membrane every 1-2 years."
-  },
-  {
-    q: "Is there a service warranty on repairs?",
-    a: "Yes! Every repair and part replacement completed by QuickROFix comes with a 30-day service guarantee. If the same issue recurs within 30 days, we fix it at zero additional cost."
-  }
-];
+function StarIcon() {
+  return (
+    <svg className="w-4 h-4 fill-[#FFA700]" viewBox="0 0 24 24">
+      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+    </svg>
+  );
+}
 
 export default function Index() {
-  const [booking, setBooking] = useState({
-    name: "",
-    phone: "",
-    service: "RO Repair & Checkup",
-    locality: "",
-  });
-  const [booked, setBooked] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const handleBooking = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!booking.name || !booking.phone) {
-      toast.error("Please enter your name and phone number");
-      return;
-    }
-    setBooked(true);
-    toast.success("Service request submitted! Our technician will call you in 5 minutes.");
-  };
-
   return (
-    <div className="bg-background text-foreground">
-      {/* Top Notification Bar */}
-      <div className="bg-primary text-white text-xs md:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
-        <span className="cta-dot shrink-0" />
-        <span>Doorstep RO Technicians available right now in Bengaluru</span>
-        <a href="tel:+918088275348" className="underline font-bold hover:text-accent">
-          Call 08088275348
-        </a>
-      </div>
+    <div className="bg-white text-[#666] font-['Poppins',sans-serif]">
+      {/* 1. HERO BANNER SECTION (Copied exactly from 24x7roservice.co.in) */}
+      <section id="banner" className="py-6 sm:py-10 bg-white">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid lg:grid-cols-12 gap-6 items-center">
+            {/* Left Info Column */}
+            <div className="lg:col-span-7 space-y-4">
+              <h1 className="text-[26px] sm:text-[34px] lg:text-[40px] text-[#3378a8] font-normal leading-[1.2]">
+                Get <strong className="font-bold text-[#3378a8]">RO Service Technician</strong> at Your Doorstep
+              </h1>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/70 via-white to-background py-12 md:py-20 border-b">
-        <div className="container max-w-6xl grid lg:grid-cols-12 gap-10 items-center">
-          {/* Left Hero Details */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
-              <span className="cta-dot" />
-              <span>Bengaluru's #1 Doorstep Water Purifier Specialist</span>
-            </div>
-
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.15]">
-              Pure Drinking Water, Guaranteed.
-              <span className="block text-primary mt-1">Technician at Your Door in 60 Mins.</span>
-            </h1>
-
-            <p className="text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
-              Fast, reliable doorstep repair, membrane change, installation, and AMC across Bengaluru. All brands supported: Kent, Aquaguard, Pureit, Livpure &amp; Havells.
-            </p>
-
-            {/* Quick CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a
-                href="tel:+918088275348"
-                className="inline-flex items-center gap-2.5 rounded-full bg-accent px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-accent/20 hover:bg-accent/90 transition-all hover:scale-[1.02]"
-                aria-label="Call Now 08088275348"
-              >
-                <Phone className="h-5 w-5" />
-                <span>Call Now: 08088275348</span>
-              </a>
-
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-6 py-3.5 text-base font-bold text-primary hover:bg-primary/5 transition-colors"
-              >
-                Book Inspection (₹199)
-              </Link>
-            </div>
-
-            {/* Trust Badges */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-border/80">
-              <div className="flex items-center gap-2.5">
-                <Clock className="h-5 w-5 text-accent shrink-0" />
-                <div>
-                  <span className="font-extrabold text-foreground text-sm block">60 Mins</span>
-                  <span className="text-xs text-muted-foreground">Doorstep Arrival</span>
+              {/* Offer Callout */}
+              <div className="banOffer pt-1 pb-1">
+                <span className="text-[14px] sm:text-[15px] text-[#666] block leading-none mb-1">
+                  at Just
+                </span>
+                <div className="text-[26px] sm:text-[34px] font-bold text-[#FFA700] leading-tight">
+                  <span className="text-[#666] text-[20px] sm:text-[24px] font-normal mr-2">
+                    ₹ 399
+                  </span>
+                  ₹ 299*
                 </div>
               </div>
-              <div className="flex items-center gap-2.5">
-                <ShieldCheck className="h-5 w-5 text-accent shrink-0" />
-                <div>
-                  <span className="font-extrabold text-foreground text-sm block">100% Genuine</span>
-                  <span className="text-xs text-muted-foreground">Spare Parts</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Award className="h-5 w-5 text-accent shrink-0" />
-                <div>
-                  <span className="font-extrabold text-foreground text-sm block">30-Day</span>
-                  <span className="text-xs text-muted-foreground">Warranty</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Droplets className="h-5 w-5 text-accent shrink-0" />
-                <div>
-                  <span className="font-extrabold text-foreground text-sm block">Free TDS</span>
-                  <span className="text-xs text-muted-foreground">Testing</span>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Right Hero Booking Card */}
-          <div className="lg:col-span-5">
-            <div className="rounded-2xl border bg-card p-6 sm:p-8 shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary to-accent" />
-              
-              <div className="mb-4">
-                <h2 className="text-xl font-extrabold text-foreground">Express Doorstep Booking</h2>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Get a certified technician dispatched in Bengaluru immediately.
-                </p>
-              </div>
+              {/* Bullet Features */}
+              <ul className="space-y-2.5 pt-1">
+                {[
+                  "Includes Full Water Purifier Checkup",
+                  "Service & spare part charges extra as per rate card",
+                  "Save Upto 50% on Annual Maintainence (AMC)",
+                  "Branded & Non-Branded RO Authentic Service",
+                  "Installation, Repair & Relocation Services",
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-[15px] sm:text-[16px] text-[#666]">
+                    <TickIcon />
+                    <p className="leading-snug">{item}</p>
+                  </li>
+                ))}
+              </ul>
 
-              {booked ? (
-                <div className="text-center py-8 space-y-3">
-                  <div className="h-12 w-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-lg font-bold">Booking Confirmed!</h3>
-                  <p className="text-xs text-muted-foreground">
-                    Technician will reach out to {booking.phone} shortly.
-                  </p>
-                  <a
-                    href="tel:+918088275348"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-accent hover:underline"
-                  >
-                    Need faster help? Call 08088275348
-                  </a>
-                </div>
-              ) : (
-                <form onSubmit={handleBooking} className="space-y-3.5">
-                  <div>
-                    <label className="block text-xs font-semibold text-foreground mb-1">Your Name *</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Rahul Sharma"
-                      value={booking.name}
-                      onChange={(e) => setBooking({ ...booking, name: e.target.value })}
-                      className="w-full px-3.5 py-2 rounded-lg border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-foreground mb-1">Phone Number *</label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="e.g. 9876543210"
-                      value={booking.phone}
-                      onChange={(e) => setBooking({ ...booking, phone: e.target.value })}
-                      className="w-full px-3.5 py-2 rounded-lg border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-foreground mb-1">Select Service</label>
-                    <select
-                      value={booking.service}
-                      onChange={(e) => setBooking({ ...booking, service: e.target.value })}
-                      className="w-full px-3.5 py-2 rounded-lg border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                    >
-                      <option value="RO Repair & Checkup">RO Repair &amp; Diagnostics (₹199)</option>
-                      <option value="Filter / Membrane Change">Filter &amp; Membrane Change</option>
-                      <option value="Installation / Relocation">Installation / Relocation</option>
-                      <option value="Annual Maintenance (AMC)">Annual Maintenance (AMC)</option>
-                      <option value="Emergency Breakdown">Emergency Breakdown</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-foreground mb-1">Area in Bengaluru</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Koramangala 4th Block"
-                      value={booking.locality}
-                      onChange={(e) => setBooking({ ...booking, locality: e.target.value })}
-                      className="w-full px-3.5 py-2 rounded-lg border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full mt-2 rounded-lg bg-accent py-3 font-bold text-white text-sm shadow hover:bg-accent/90 transition-colors"
-                  >
-                    Confirm Doorstep Visit
-                  </button>
-
-                  <div className="flex items-center justify-between text-[11px] text-muted-foreground pt-1">
-                    <span>⚡ 60-min express arrival</span>
-                    <span>🔒 Safe &amp; verified technicians</span>
-                  </div>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Common RO Problems We Fix */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container max-w-6xl">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-accent">Fast Troubleshooting</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mt-2">
-              Common Water Purifier Issues We Fix
-            </h2>
-            <p className="text-muted-foreground mt-2 text-sm sm:text-base">
-              Don't compromise your family's health with substandard water. Our technicians identify and resolve problems within minutes.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {problems.map((p, idx) => {
-              const Icon = p.icon;
-              return (
-                <div
-                  key={idx}
-                  className="reveal rounded-xl border bg-card p-6 shadow-sm hover:border-primary/50 hover:shadow-md transition-all flex flex-col justify-between"
-                  style={{ animationDelay: `${idx * 80}ms` }}
+              {/* Calling CTA (Only Calling CTA) */}
+              <div className="pt-3 flex items-center gap-3">
+                <a
+                  href="tel:08088275348"
+                  className="inline-flex items-center gap-2.5 rounded-lg bg-[#FFA700] px-7 py-3.5 text-[17px] font-bold text-white shadow-lg shadow-[#FFA700]/30 hover:bg-[#e09300] transition-all hover:scale-[1.02] active:scale-95"
+                  aria-label="Call 08088275348"
                 >
-                  <div>
-                    <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                      <Icon className="h-6 w-6 text-accent" />
-                    </div>
-                    <h3 className="font-bold text-foreground text-base">{p.title}</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-2 leading-relaxed">
-                      {p.desc}
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-3 border-t flex items-center justify-between text-xs">
-                    <span className="text-primary font-semibold">Fixed in 1 Visit</span>
-                    <a href="tel:+918088275348" className="text-accent font-bold hover:underline">
-                      Call Tech &rarr;
-                    </a>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-16 md:py-24 bg-muted/20 border-y">
-        <div className="container max-w-6xl">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-accent">Transparent Pricing</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mt-2">
-              Professional RO Services
-            </h2>
-            <p className="text-muted-foreground mt-2 text-sm sm:text-base">
-              Fixed rate cards, no surprises. Genuine brand spares with invoice.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="rounded-2xl border bg-card p-6 sm:p-8 shadow-sm flex flex-col justify-between">
-              <div>
-                <img src="/service-1.svg" alt="Service 1" className="h-14 w-14 mb-4" />
-                <h3 className="text-xl font-bold text-foreground">RO Repair &amp; Diagnostics</h3>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Complete health checkup of membrane, motor pump, solenoid valve, electrical adapter, and filtration stages.
-                </p>
-                <div className="mt-4 space-y-2 text-xs sm:text-sm text-foreground/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> Free TDS &amp; pH water analysis</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> Leakage &amp; pipe repair</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> 30-Day service warranty</div>
-                </div>
-              </div>
-              <div className="mt-6 pt-4 border-t flex items-center justify-between">
-                <div>
-                  <span className="text-xs text-muted-foreground block">Inspection</span>
-                  <span className="text-lg font-black text-primary">₹199</span>
-                </div>
-                <a href="tel:+918088275348" className="rounded-lg bg-accent px-4 py-2 text-xs font-bold text-white hover:bg-accent/90">
-                  Book Now
+                  <Phone className="h-5 w-5" />
+                  <span>Call Now: 08088275348</span>
                 </a>
               </div>
             </div>
 
-            {/* Card 2 */}
-            <div className="rounded-2xl border-2 border-primary/40 bg-card p-6 sm:p-8 shadow-md relative flex flex-col justify-between">
-              <span className="absolute -top-3 right-6 rounded-full bg-primary px-3 py-0.5 text-[11px] font-bold text-white uppercase tracking-wider">
-                Most Popular
+            {/* Right Column: Hero Images from 24x7roservice.co.in */}
+            <div className="lg:col-span-5">
+              <div className="mx-auto max-w-md lg:max-w-none text-center">
+                {/* Desktop Hero Image */}
+                <div className="hidden sm:block">
+                  <img
+                    src="/images/banner-bg.jpg"
+                    alt="RO Service Technician at Your Doorstep"
+                    className="w-full h-auto object-contain rounded-lg"
+                  />
+                </div>
+
+                {/* Mobile Hero Image */}
+                <div className="sm:hidden">
+                  <img
+                    src="/images/banner-mobile.jpg"
+                    alt="RO Service Technician at Your Doorstep"
+                    className="w-full max-w-[260px] mx-auto h-auto object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. IMPORTANT USPs SECTION (3 Key Highlights on #3378a8 background) */}
+      <section className="bg-[#3378a8] py-5">
+        <div className="container max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="flex items-center justify-center gap-3.5 text-left">
+              <div className="h-[60px] w-[60px] shrink-0 bg-white rounded-full flex items-center justify-center p-2.5 shadow">
+                <img src="/images/ic1.png" alt="Save More on AMC Package" className="max-h-full max-w-full object-contain" />
+              </div>
+              <strong className="text-white text-[16px] sm:text-[17px] font-bold leading-tight">
+                Save More<br />on AMC Package
+              </strong>
+            </div>
+
+            <div className="flex items-center justify-center gap-3.5 text-left">
+              <div className="h-[60px] w-[60px] shrink-0 bg-white rounded-full flex items-center justify-center p-2.5 shadow">
+                <img src="/images/ic2.png" alt="RO Installation Maintenance Repair Service" className="max-h-full max-w-full object-contain" />
+              </div>
+              <strong className="text-white text-[16px] sm:text-[17px] font-bold leading-tight">
+                RO Installation<br />Maintenance, Repair, Service
+              </strong>
+            </div>
+
+            <div className="flex items-center justify-center gap-3.5 text-left">
+              <div className="h-[60px] w-[60px] shrink-0 bg-white rounded-full flex items-center justify-center p-2.5 shadow">
+                <img src="/images/ic3.png" alt="Specially Trained Technicians" className="max-h-full max-w-full object-contain" />
+              </div>
+              <strong className="text-white text-[16px] sm:text-[17px] font-bold leading-tight">
+                Specially Trained <br />Technicians
+              </strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. FACING THE BELOW PROBLEMS? (Diagnostic Center with drop icons) */}
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="container max-w-6xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-[26px] sm:text-[32px] font-bold text-[#3378a8]">
+              Facing the Below Problems?
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-4 items-center">
+            {/* Left 4 problems */}
+            <div className="md:col-span-4 space-y-6 text-left md:text-right">
+              {[
+                { l1: "RO Making", l2: "Beep Sound" },
+                { l1: "LCD Indicators", l2: "Not Displayed" },
+                { l1: "TDS Level", l2: "Increased" },
+                { l1: "RO Dispensing", l2: "Less or No Water" },
+              ].map((item, idx) => (
+                <div key={idx} className="flex md:flex-row-reverse items-center gap-3">
+                  <img src="/images/drop.png" alt="Problem" className="w-[30px] h-[30px] object-contain shrink-0" />
+                  <span className="text-[17px] sm:text-[19px] font-bold text-[#3378a8] leading-tight">
+                    {item.l1}<br />{item.l2}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Center Image */}
+            <div className="md:col-span-4 text-center py-4">
+              <img
+                src="/images/center-image.png"
+                alt="Home Water Purifier Service Center"
+                className="w-[85%] max-w-[300px] mx-auto h-auto object-contain"
+              />
+            </div>
+
+            {/* Right 4 problems */}
+            <div className="md:col-span-4 space-y-6 text-left">
+              {[
+                { l1: "Water Leakage", l2: "Bad Taste or Smell" },
+                { l1: "Vibrations or Noise", l2: "in RO Purifier" },
+                { l1: "Low Water Flow or", l2: "Slow Storage Tank Filling" },
+                { l1: "RO Purifier", l2: "Not Working" },
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-3">
+                  <img src="/images/drop.png" alt="Problem" className="w-[30px] h-[30px] object-contain shrink-0" />
+                  <span className="text-[17px] sm:text-[19px] font-bold text-[#3378a8] leading-tight">
+                    {item.l1}<br />{item.l2}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Feature Callout CTA bar */}
+          <div className="mt-10 max-w-2xl mx-auto rounded-lg bg-[#FFA700] text-white py-3.5 px-6 text-center shadow">
+            <p className="text-[16px] sm:text-[18px] font-bold leading-tight">Your RO Needs Immediate Service</p>
+            <div className="mt-1 text-[15px] sm:text-[16px]">
+              <span>For Booking Call: </span>
+              <a href="tel:08088275348" className="font-extrabold underline hover:text-slate-900">
+                08088275348
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. WHY CHOOSE US? */}
+      <section className="py-12 sm:py-16 bg-slate-50 border-t">
+        <div className="container max-w-6xl mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            <h2 className="text-[26px] sm:text-[32px] font-bold text-[#3378a8] mb-2">
+              Why Choose us?
+            </h2>
+            <p className="text-[14px] sm:text-[15px] text-[#666] leading-relaxed">
+              Home Water Purifier Service Center RO Service Center stands out as one of the top water purifier RO service centers in the region due to a multitude of reasons, despite the existence of several other similar service providers.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="flex items-center gap-4 bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+              <span className="w-[65px] h-[65px] rounded-full bg-[#cee0eb] flex items-center justify-center shrink-0">
+                <img src="/images/prof.png" alt="Professional Service" className="w-[70%] object-contain" />
               </span>
               <div>
-                <img src="/service-2.svg" alt="Service 2" className="h-14 w-14 mb-4" />
-                <h3 className="text-xl font-bold text-foreground">Filter &amp; Membrane Kit</h3>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Complete rejuvenation for choked purifiers. High-rejection TFC membrane and micron sediment/carbon block filters.
-                </p>
-                <div className="mt-4 space-y-2 text-xs sm:text-sm text-foreground/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> 75 / 80 / 100 GPD Membranes</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> Spun pre-filter + Carbon blocks</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> Mineral cartridge taste enhancer</div>
-                </div>
-              </div>
-              <div className="mt-6 pt-4 border-t flex items-center justify-between">
-                <div>
-                  <span className="text-xs text-muted-foreground block">Starting at</span>
-                  <span className="text-lg font-black text-primary">₹499</span>
-                </div>
-                <a href="tel:+918088275348" className="rounded-lg bg-accent px-4 py-2 text-xs font-bold text-white hover:bg-accent/90">
-                  Book Now
-                </a>
+                <p className="text-[17px] font-bold text-slate-800 leading-tight">Unmatched Professional Service</p>
+                <small className="text-[13px] text-[#666] block mt-1">Specially Trained Technicians at Affordable Price</small>
               </div>
             </div>
 
-            {/* Card 3 */}
-            <div className="rounded-2xl border bg-card p-6 sm:p-8 shadow-sm flex flex-col justify-between">
-              <div>
-                <img src="/service-3.svg" alt="Service 3" className="h-14 w-14 mb-4" />
-                <h3 className="text-xl font-bold text-foreground">Installation &amp; AMC</h3>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Safe wall installation, uninstallation during house shifting, and 1-year all-inclusive Annual Maintenance Contracts.
-                </p>
-                <div className="mt-4 space-y-2 text-xs sm:text-sm text-foreground/80">
-                  <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> Safe masonry drilling &amp; wall mounting</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> 3 Mandatory periodic visits in AMC</div>
-                  <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent shrink-0" /> Unlimited breakdown visits covered</div>
-                </div>
-              </div>
-              <div className="mt-6 pt-4 border-t flex items-center justify-between">
-                <div>
-                  <span className="text-xs text-muted-foreground block">AMC from</span>
-                  <span className="text-lg font-black text-primary">₹1,999/yr</span>
-                </div>
-                <a href="tel:+918088275348" className="rounded-lg bg-accent px-4 py-2 text-xs font-bold text-white hover:bg-accent/90">
-                  Book Now
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Brands Supported */}
-      <section className="py-14 bg-white">
-        <div className="container max-w-6xl">
-          <h3 className="text-center text-sm font-bold uppercase tracking-wider text-muted-foreground mb-8">
-            Expert Technicians For All Major Purifier Brands
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-4 items-center">
-            {brands.map((b, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col items-center justify-center p-3 rounded-xl border bg-muted/10 hover:border-primary/40 transition-colors"
-              >
-                <img src={b.img} alt={b.name} className="h-12 w-12 object-contain mb-1.5" />
-                <span className="text-xs font-bold text-foreground">{b.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Customer Reviews Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-blue-50/50 to-white border-y">
-        <div className="container max-w-6xl">
-          <div className="text-center max-w-2xl mx-auto mb-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-accent">Customer Testimonials</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mt-2">
-              Loved by 15,000+ Homes in Bengaluru
-            </h2>
-            <p className="text-muted-foreground mt-2 text-sm sm:text-base">
-              See what your neighbors in Indiranagar, Koramangala, Whitefield, and HSR Layout have to say.
-            </p>
-          </div>
-
-          <ReviewsCarousel reviews={reviewsData} />
-        </div>
-      </section>
-
-      {/* Coverage Areas in Bengaluru */}
-      <section className="py-16 bg-white">
-        <div className="container max-w-6xl">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <span className="text-xs font-bold uppercase tracking-wider text-accent">Doorstep Reach</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-2">
-              Serving All Areas Across Bengaluru
-            </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-              Our service vans and field technicians operate in every neighborhood.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-2.5 max-w-4xl mx-auto">
-            {localities.map((loc, idx) => (
-              <span
-                key={idx}
-                className="inline-flex items-center gap-1.5 rounded-full bg-muted/40 px-3.5 py-1.5 text-xs font-medium text-foreground hover:bg-primary/10 hover:text-primary transition-colors cursor-default"
-              >
-                <MapPin className="h-3 w-3 text-accent" />
-                {loc}
+            <div className="flex items-center gap-4 bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+              <span className="w-[65px] h-[65px] rounded-full bg-[#cee0eb] flex items-center justify-center shrink-0">
+                <img src="/images/ic1.png" alt="Transparent Charges" className="w-[60%] object-contain" />
               </span>
-            ))}
+              <div>
+                <p className="text-[17px] font-bold text-slate-800 leading-tight">Transparent Charges (No Hidden Charges)</p>
+                <small className="text-[13px] text-[#666] block mt-1">Before Any Part Replacement, We Take Your Approval</small>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+              <span className="w-[65px] h-[65px] rounded-full bg-[#cee0eb] flex items-center justify-center shrink-0">
+                <img src="/images/ic1.png" alt="Affordable AMCs" className="w-[60%] object-contain" />
+              </span>
+              <div>
+                <p className="text-[17px] font-bold text-slate-800 leading-tight">Affordable AMCs</p>
+                <small className="text-[13px] text-[#666] block mt-1">Great way to get regular and timely repairs</small>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+              <span className="w-[65px] h-[65px] rounded-full bg-[#cee0eb] flex items-center justify-center shrink-0">
+                <img src="/images/exp.png" alt="16 Years Experience" className="w-[70%] object-contain" />
+              </span>
+              <div>
+                <p className="text-[17px] font-bold text-slate-800 leading-tight">16 Years of RO Service Experience</p>
+                <small className="text-[13px] text-[#666] block mt-1">Installed 47,000 RO purifiers</small>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ Accordion */}
-      <section className="py-16 bg-muted/20 border-t">
-        <div className="container max-w-4xl">
-          <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-accent">Got Questions?</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground mt-2">
+      {/* 5. SUBSCRIPTION PLANS (AMC) */}
+      <section className="py-12 sm:py-16 bg-white border-t">
+        <div className="container max-w-6xl mx-auto px-4">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="text-[26px] sm:text-[32px] font-bold text-[#3378a8] mb-1">
+              Subscription Plans
+            </h2>
+            <p className="text-[14px] sm:text-[15px] text-[#666]">
+              Recommend for Family of 2 members
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {/* Plan 1 */}
+            <div className="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between bg-white">
+              <div>
+                <div className="bg-[#0d5792] text-white text-center py-2.5 text-[17px] font-bold">
+                  AMC Plan 1
+                </div>
+                <div className="text-center py-2.5 text-[18px] font-bold text-[#3378a8] border-b border-[#3378a8] mx-5">
+                  Rs. 999
+                </div>
+                <div className="p-5">
+                  <ul className="list-disc pl-5 space-y-2 text-[14px] text-[#3378a8]">
+                    <li><p className="text-[#666]">Includes Service</p></li>
+                    <li><p className="text-[#666]">Filter (Not Covered)</p></li>
+                    <li><p className="text-[#666]">Membrane (Not Covered)</p></li>
+                    <li><p className="text-[#666]">Electrical Parts (Not Covered)</p></li>
+                    <li><p className="text-[#666]">Faulty Parts (Not Covered)</p></li>
+                  </ul>
+                </div>
+              </div>
+              <div className="p-5 pt-0">
+                <a
+                  href="tel:08088275348"
+                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded bg-[#FFA700] text-white text-[15px] font-bold hover:bg-[#FFA700]/90 transition-colors shadow-sm"
+                >
+                  <Phone className="h-4 w-4" />
+                  <span>Call to Book Plan</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Plan 2 (Gold) */}
+            <div className="rounded-2xl border-2 border-[#FFA700] overflow-hidden shadow-md flex flex-col justify-between bg-white relative">
+              <span className="absolute top-1 right-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                POPULAR
+              </span>
+              <div>
+                <div className="bg-[#FFA700] text-white text-center py-2.5 text-[17px] font-bold">
+                  AMC Plan 2
+                </div>
+                <div className="text-center py-2.5 text-[18px] font-bold text-[#3378a8] border-b border-[#3378a8] mx-5">
+                  Rs. 8500
+                </div>
+                <div className="p-5">
+                  <ul className="list-disc pl-5 space-y-2 text-[14px] text-[#3378a8]">
+                    <li><p className="text-[#666]">Includes Service</p></li>
+                    <li><p className="text-[#666] font-semibold text-slate-800">Electrical Parts Covered</p></li>
+                    <li><p className="text-[#666] font-semibold text-slate-800">Filter Covered</p></li>
+                    <li><p className="text-[#666] font-semibold text-slate-800">Membrane Covered</p></li>
+                    <li><p className="text-[#666]">Faulty Parts (Not Covered)</p></li>
+                  </ul>
+                </div>
+              </div>
+              <div className="p-5 pt-0">
+                <a
+                  href="tel:08088275348"
+                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded bg-[#FFA700] text-white text-[15px] font-bold hover:bg-[#FFA700]/90 transition-colors shadow-sm"
+                >
+                  <Phone className="h-4 w-4" />
+                  <span>Call to Book Plan</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Plan 3 */}
+            <div className="rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between bg-white">
+              <div>
+                <div className="bg-[#0d5792] text-white text-center py-2.5 text-[17px] font-bold">
+                  AMC Plan 3
+                </div>
+                <div className="text-center py-2.5 text-[18px] font-bold text-[#3378a8] border-b border-[#3378a8] mx-5">
+                  Rs. 10500
+                </div>
+                <div className="p-5">
+                  <ul className="list-disc pl-5 space-y-2 text-[14px] text-[#3378a8]">
+                    <li><p className="text-[#666]">Includes Service</p></li>
+                    <li><p className="text-[#666] font-semibold text-slate-800">Filter Covered</p></li>
+                    <li><p className="text-[#666] font-semibold text-slate-800">Electrical Parts Covered</p></li>
+                    <li><p className="text-[#666] font-semibold text-slate-800">Membrane Covered</p></li>
+                    <li><p className="text-[#666] font-semibold text-slate-800">Faulty Parts Covered</p></li>
+                  </ul>
+                </div>
+              </div>
+              <div className="p-5 pt-0">
+                <a
+                  href="tel:08088275348"
+                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded bg-[#FFA700] text-white text-[15px] font-bold hover:bg-[#FFA700]/90 transition-colors shadow-sm"
+                >
+                  <Phone className="h-4 w-4" />
+                  <span>Call to Book Plan</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. CARING FOR 45,000+ FAMILIES ANNUALLY WITH LOVE */}
+      <section className="py-12 sm:py-16 bg-slate-50 border-t text-center">
+        <div className="container max-w-6xl mx-auto px-4">
+          <div className="max-w-3xl mx-auto mb-10">
+            <h2 className="text-[24px] sm:text-[30px] font-bold text-[#3378a8] mb-2 leading-tight">
+              Caring for 45,000+ families annually with love.
+            </h2>
+            <p className="text-[14px] text-[#666] leading-relaxed">
+              We take pride in our commitment to providing exceptional service to our customers. We understand the importance of clean and safe drinking water, which is why we offer annual maintenance contracts to ensure that our customers' water purifiers are functioning optimally. Our team of experts conducts servicing with care and love, making sure that our customers have access to the best possible water purifier services.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto text-center">
+            <div className="p-4">
+              <img src="/images/ic1-1.png" alt="Expertise and Experience" className="w-[60px] h-[60px] mx-auto mb-3 object-contain" />
+              <h3 className="text-[18px] font-bold text-[#3378a8] mb-2">Expertise and Experience</h3>
+              <p className="text-[13.5px] text-[#666] leading-relaxed">
+                With 13 years of experience in the industry, we have developed a deep understanding of the complexities of water purifiers. Our team of experts is equipped with the latest knowledge and technologies to provide the most efficient and effective solutions.
+              </p>
+            </div>
+
+            <div className="p-4">
+              <img src="/images/ic2.png" alt="Prompt and Efficient Service" className="w-[60px] h-[60px] mx-auto mb-3 object-contain" />
+              <h3 className="text-[18px] font-bold text-[#3378a8] mb-2">Prompt and Efficient Service</h3>
+              <p className="text-[13.5px] text-[#666] leading-relaxed">
+                We understand the importance of having a functional water purifier at all times, which is why we provide prompt and efficient services to address any problems you may have. Our technicians are trained to diagnose and fix issues quickly.
+              </p>
+            </div>
+
+            <div className="p-4">
+              <img src="/images/ic3.png" alt="Customer Satisfaction" className="w-[60px] h-[60px] mx-auto mb-3 object-contain" />
+              <h3 className="text-[18px] font-bold text-[#3378a8] mb-2">Customer Satisfaction</h3>
+              <p className="text-[13.5px] text-[#666] leading-relaxed">
+                Our commitment to customer satisfaction is what sets us apart from the rest. We strive to exceed your expectations by providing exceptional services. Our team is dedicated to ensuring you receive the highest quality of service.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. HAPPY CUSTOMERS (Real Testimonials from 24x7roservice.co.in) */}
+      <section className="py-12 sm:py-16 bg-white border-t text-center">
+        <div className="container max-w-6xl mx-auto px-4">
+          <h2 className="text-[26px] sm:text-[32px] font-bold text-[#3378a8] mb-12">
+            Happy Customers
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {/* Customer 1 */}
+            <div className="bg-white rounded-2xl p-6 shadow-[0_0_20px_-10px_#000] flex flex-col justify-between pt-10 relative mt-6">
+              <span className="w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-1/2 -translate-x-1/2 border-2 border-white shadow">
+                <img src="/images/person1.png" alt="Shivani" className="w-full h-full object-cover" />
+              </span>
+              <div>
+                <div className="text-[15px] font-bold text-[#666] mt-2">
+                  Shivani <small className="block text-xs font-normal text-slate-400">HITEC City</small>
+                </div>
+                <p className="text-[13.5px] text-[#666] leading-relaxed mt-3">
+                  "I recently used their services for my RO purifier, and I must say I am impressed. The technician was prompt, courteous, and knowledgeable. He quickly identified and fixed the problem, and now my purifier is working better than ever before. I highly recommend their services."
+                </p>
+              </div>
+              <div className="flex items-center justify-center gap-1 mt-4">
+                {[...Array(5)].map((_, i) => (
+                  <StarIcon key={i} />
+                ))}
+              </div>
+            </div>
+
+            {/* Customer 2 */}
+            <div className="bg-white rounded-2xl p-6 shadow-[0_0_20px_-10px_#000] flex flex-col justify-between pt-10 relative mt-6">
+              <span className="w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-1/2 -translate-x-1/2 border-2 border-white shadow">
+                <img src="/images/person2.png" alt="Dheeman" className="w-full h-full object-cover" />
+              </span>
+              <div>
+                <div className="text-[15px] font-bold text-[#666] mt-2">
+                  Dheeman <small className="block text-xs font-normal text-slate-400">Secunderabad</small>
+                </div>
+                <p className="text-[13.5px] text-[#666] leading-relaxed mt-3">
+                  "I have been using their annual maintenance contract for my RO purifier for the past few years, and I am extremely satisfied with their services. Their technicians are always on time, and they do a thorough job of servicing my purifier. I feel confident that my family is drinking safe water."
+                </p>
+              </div>
+              <div className="flex items-center justify-center gap-1 mt-4">
+                {[...Array(5)].map((_, i) => (
+                  <StarIcon key={i} />
+                ))}
+              </div>
+            </div>
+
+            {/* Customer 3 */}
+            <div className="bg-white rounded-2xl p-6 shadow-[0_0_20px_-10px_#000] flex flex-col justify-between pt-10 relative mt-6">
+              <span className="w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-1/2 -translate-x-1/2 border-2 border-white shadow">
+                <img src="/images/person3.png" alt="Rashmi" className="w-full h-full object-cover" />
+              </span>
+              <div>
+                <div className="text-[15px] font-bold text-[#666] mt-2">
+                  Rashmi <small className="block text-xs font-normal text-slate-400">Secunderabad</small>
+                </div>
+                <p className="text-[13.5px] text-[#666] leading-relaxed mt-3">
+                  "I had an urgent issue with my RO purifier, and I called their customer support. The representative was very helpful and immediately arranged for a technician to visit my home. The technician arrived within an hour, and he quickly fixed the issue."
+                </p>
+              </div>
+              <div className="flex items-center justify-center gap-1 mt-4">
+                {[...Array(5)].map((_, i) => (
+                  <StarIcon key={i} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. DIRECT CALLING HERO BANNER (No Form - Only Calling CTA) */}
+      <section className="py-12 sm:py-16 bg-[#3378a8] text-white text-center">
+        <div className="container max-w-3xl mx-auto px-4">
+          <div className="flex items-center justify-center h-14 w-14 rounded-full bg-white/20 mx-auto mb-4">
+            <Phone className="h-7 w-7 text-[#FFA700]" />
+          </div>
+          <h2 className="text-[24px] sm:text-[30px] font-bold text-white mb-2 leading-tight">
+            Need an RO Technician at Your Doorstep?
+          </h2>
+          <p className="text-[14px] text-white/90 max-w-xl mx-auto mb-6 leading-relaxed">
+            Call our helpline directly for immediate technician dispatch within 60 minutes. Kent, Aquaguard, Pureit, Livpure &amp; all brands serviced.
+          </p>
+          <a
+            href="tel:08088275348"
+            className="inline-flex items-center gap-2.5 rounded-full bg-[#FFA700] px-8 py-3.5 font-black text-white text-[18px] sm:text-[20px] shadow-xl hover:bg-[#e09300] transition-all hover:scale-105 active:scale-95"
+          >
+            <Phone className="h-6 w-6" />
+            <span>Call Now: 08088275348</span>
+          </a>
+        </div>
+      </section>
+
+      {/* 9. FAQ ACCORDION */}
+      <section className="py-12 bg-white border-t">
+        <div className="container max-w-4xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-[24px] sm:text-[30px] font-bold text-[#3378a8]">
               Frequently Asked Questions
             </h2>
           </div>
 
           <div className="space-y-3">
-            {faqs.map((faq, idx) => {
+            {[
+              {
+                q: "What is included in the ₹299* Water Purifier Checkup?",
+                a: "The ₹299 checkup covers full multi-point diagnostics: checking booster pump pressure, measuring TDS, inspecting electrical SMPS adapter and solenoid valve, checking pre-filters and RO membrane condition, and testing pipe fittings for leaks. Replacement spares are charged separately with prior approval."
+              },
+              {
+                q: "How fast will the technician reach my doorstep?",
+                a: "Our technicians are stationed locally and reach your doorstep within 45 to 60 minutes across major zones."
+              },
+              {
+                q: "Are the replacement filters genuine?",
+                a: "Yes. All replacement filters, sediment cartridges, carbon blocks, and reverse osmosis membranes are 100% factory-sealed OEM parts."
+              },
+              {
+                q: "Do you service all brands like Kent, Aquaguard, Pureit, and Livpure?",
+                a: "Yes! Our technicians are specially trained on branded & non-branded water purifiers including Kent, Eureka Forbes Aquaguard, Pureit, Livpure, Havells, AO Smith, and Blue Star."
+              }
+            ].map((faq, idx) => {
               const isOpen = openFaq === idx;
               return (
-                <div key={idx} className="rounded-xl border bg-card overflow-hidden">
+                <div key={idx} className="rounded-lg border border-slate-200 bg-white overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full flex items-center justify-between p-4 text-left font-bold text-foreground text-sm hover:bg-muted/10 transition-colors"
+                    className="w-full flex items-center justify-between p-3.5 text-left font-bold text-slate-800 text-[14.5px] hover:bg-slate-50 transition-colors"
                   >
                     <span>{faq.q}</span>
-                    <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
                   </button>
                   {isOpen && (
-                    <div className="px-4 pb-4 text-xs sm:text-sm text-muted-foreground leading-relaxed border-t pt-3">
+                    <div className="px-3.5 pb-3.5 text-[13.5px] text-[#666] leading-relaxed border-t border-slate-100 pt-2.5">
                       {faq.a}
                     </div>
                   )}
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Emergency Bottom Call Banner */}
-      <section className="bg-gradient-to-r from-primary to-blue-700 text-white py-12 px-4">
-        <div className="container max-w-4xl text-center space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-extrabold">Need Quick RO Service Today?</h2>
-          <p className="text-blue-100 max-w-lg mx-auto text-sm">
-            Speak directly with our Bengaluru dispatch coordinator. We will have a certified technician at your home in under 60 minutes.
-          </p>
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href="tel:+918088275348"
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-base font-extrabold text-white shadow-lg hover:bg-accent/90 transition-all hover:scale-105"
-            >
-              <Phone className="h-5 w-5" />
-              Call Now: 08088275348
-            </a>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-white/80 px-6 py-3.5 text-base font-bold text-white hover:bg-white/10 transition-colors"
-            >
-              Book Service Online
-            </Link>
           </div>
         </div>
       </section>
